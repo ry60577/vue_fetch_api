@@ -1,24 +1,30 @@
-# vue_fetch_api
+# 使用 fetch 建立api攔截器
 
-## Project setup
-```
-npm install
-```
+## 目錄
+- [Purpose](#purpose)
+- [Environment](#environment)
+- [The way call api(api.js)](#the-way-call-api)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Purpose
+Using fetch interceptors to send api request instead of axios
 
-### Compiles and minifies for production
-```
-npm run build
-```
+使用 fetch 方式，封裝interceptors 發送 api request來代替axios
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Environment
+Vue 3
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Folder Structure
+![](https://i.imgur.com/3AueY10.png)
+
+## The way call api
+```
+//  api.js
+import * as request from './request'
+
+const IP_HOST = 'https://api.ipify.org'
+const PERSON_HOST = 'https://api.genderize.io'
+
+export const apiGetIP = () => request.get(IP_HOST, { format: 'json' })
+export const apiGetPersonInfo = () => request.get(`${PERSON_HOST}`, { name: 'astrid' })
+```
+![](https://i.imgur.com/BBKZYh9.png)
