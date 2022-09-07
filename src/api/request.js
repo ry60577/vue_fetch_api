@@ -10,10 +10,12 @@ const Fetch = (option) => {
   req_interceptors.forEach(fn => option = fn(option))
 
   let url = option.url
-  if ( option.method.toUpperCase() === 'GET' && option.params !== undefined && Object.keys(option.params).length > 0 ) {
+  if ( option.method.toUpperCase() === 'GET' && option.params !== null ) {
     url += '?' + ( new URLSearchParams( option.params ) ).toString();
   }
-
+  option.headers = new Headers({
+    'Content-Type': 'application/json',
+  })
   const controller = new AbortController();
   setTimeout(() => {
     controller.abort();
@@ -92,35 +94,31 @@ Fetch.interceptors.response.use(
   }
 )
 
-export const get = (url, params = {}, header = {}) => {
+export const get = (url, params = null) => {
   return Fetch({
     url: url,
     method: 'GET',
-    params: params,
-    headers: header
+    params: params
   })
 }
-export const post = (url, data, header = {}) => {
+export const post = (url, data) => {
   return Fetch({
     url: url,
     method: 'POST',
-    body: data,
-    headers: header
+    body: data
   })
 }
-export const put = (url, data, header = {}) => {
+export const put = (url, data) => {
   return Fetch({
     url: url,
     method: 'PUT',
-    body: data,
-    headers: header
+    body: data
   })
 }
-export const _delete = (url, data, header = {}) => {
+export const _delete = (url, data) => {
   return Fetch({
     url: url,
     method: 'DELETE',
-    body: data,
-    headers: header
+    body: data
   })
 }
